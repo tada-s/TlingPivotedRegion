@@ -58,10 +58,22 @@ function initBoard(){
 
 /** Main Tiling Algorithm **/
 
-function calculateTiling(){
+function generateGraph(){
 	makeGraph();
-	console.log(g);
+	board_tromino = [];
+}
+
+function calculateTiling(){
 	maxflow();
+	loadTromino();
+}
+
+function addTromino(){
+	augmentPath();
+	loadTromino();
+}
+
+function loadTromino(){
 	board_tromino = [];
 	for(var i = 0; i < b.length; i++){
 		var v1 = b[i];
@@ -83,7 +95,6 @@ function calculateTiling(){
 			}
 		}
 	}
-	//console.log(board_tromino);
 }
 
 function makeGraph(){

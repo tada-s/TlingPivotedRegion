@@ -21,9 +21,11 @@ function eventInitialize(){
 	elementCanvas.addEventListener("mouseup", eventMouseUp);
 	elementCanvas.addEventListener("mousemove", eventMouseMove);
 
-	var elementButton = document.getElementById("buttonSpanningTree");
-	elementButton.addEventListener("click", eventButtonPress);
-	
+	var elementButtonTiling = document.getElementById("buttonTiling");
+	elementButtonTiling.addEventListener("click", eventButtonTilingPress);
+	var elementButtonAddTromino = document.getElementById("buttonAddTromino");
+	elementButtonAddTromino.addEventListener("click", eventButtonAddTrominoPress);
+
 	initDraw();
 	initBoard();
 
@@ -31,14 +33,23 @@ function eventInitialize(){
 }
 
 /** Button Press **/
-function eventButtonPress(evt){
+function eventButtonTilingPress(evt){
 	if(drawTrominoFlag){
 		drawTrominoFlag = false;
 		this.innerHTML = "Show tiling";
+		generateGraph();
 	}else{
 		drawTrominoFlag = true;
-		this.innerHTML = "Hide tiling";
+		this.innerHTML = "Clear tiling";
+		calculateTiling();
 	}
+	draw();
+}
+
+function eventButtonAddTrominoPress(evt){
+	document.getElementById("buttonTiling").innerHTML = "Clear tiling";
+	drawTrominoFlag = true;
+	addTromino();
 	draw();
 }
 
@@ -58,8 +69,10 @@ function eventMouseDown(evt){
 		}
 	}
 	
-	calculateTiling();
-	
+	generateGraph();
+	if(drawTrominoFlag){
+		calculateTiling();
+	}
 	draw();
 }
 
